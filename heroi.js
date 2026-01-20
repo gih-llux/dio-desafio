@@ -1,5 +1,4 @@
-//ultimo desafio
-console.log("PROGRAMA INICIADO");
+console.log("=== SISTEMA SIMPLES DE BATALHA ===");
 
 // Classe do herói
 class Heroi {
@@ -7,6 +6,7 @@ class Heroi {
         this.nome = nome;
         this.idade = idade;
         this.tipo = tipo;
+        this.vida = 100;
     }
 
     atacar() {
@@ -29,12 +29,31 @@ class Heroi {
                 ataque = "ataque desconhecido";
         }
 
-        console.log(`o ${this.tipo} atacou usando ${ataque}`);
+        console.log(`o ${this.tipo} ${this.nome} atacou usando ${ataque}`);
+        return 20; // dano fixo simples
     }
 }
 
-// EXECUÇÃO (SEM ISSO, NADA APARECE)
-const heroi = new Heroi("Merlin", 150, "mago");
-heroi.atacar();
+// Sistema simples de batalha
+function batalha(heroi1, heroi2) {
+    console.log("\n=== BATALHA INICIADA ===\n");
 
-console.log("PROGRAMA FINALIZADO");
+    while (heroi1.vida > 0 && heroi2.vida > 0) {
+        heroi2.vida -= heroi1.atacar();
+        console.log(`${heroi2.nome} agora tem ${heroi2.vida} de vida\n`);
+        if (heroi2.vida <= 0) break;
+
+        heroi1.vida -= heroi2.atacar();
+        console.log(`${heroi1.nome} agora tem ${heroi1.vida} de vida\n`);
+    }
+
+    const vencedor = heroi1.vida > 0 ? heroi1.nome : heroi2.nome;
+    console.log(`=== ${vencedor} VENCEU A BATALHA! ===`);
+}
+
+// Seleção de dois heróis
+const heroiA = new Heroi("Matias", 150, "mago");
+const heroiB = new Heroi("juca", 30, "guerreiro");
+
+// Iniciando a batalha
+batalha(heroiA, heroiB);
